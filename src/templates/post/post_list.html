@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title_pg }}{% endblock title %}
+
+{% block content %}
+<h1>Post</h1>
+<ul>
+{% for post in object_list %}
+    <li>{{ post.title }} - {{ post.publish_date }}</li>
+    <a href="postdetail/{{post.id}}">Detalle</a>
+{% endfor %}
+</ul>
+{% endblock content %}

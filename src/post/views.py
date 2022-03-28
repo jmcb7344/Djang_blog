@@ -1,14 +1,21 @@
+from pyexpat import model
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
-from post import forms
+from post import forms, models
 from django.views import generic
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render 
 
 # Create your views here.
-def home(request):
-    #solo se creo para prueba
-    
-    return HttpResponse('hola', 'base.html')
+class PostList(generic.ListView):
+    model = models.Post
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title_pg'] = 'Lista de Post'
+        return context
+
+class PostDetail(generic.DetailView):
+    model = models.Post
 
 class NuevoUser(generic.CreateView):
     model = User
