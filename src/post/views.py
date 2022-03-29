@@ -1,4 +1,3 @@
-from pyexpat import model
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from post import forms, models
@@ -16,6 +15,22 @@ class PostList(generic.ListView):
 
 class PostDetail(generic.DetailView):
     model = models.Post
+
+class CreatePost(generic.CreateView):
+    model = models.Post
+    fields = '__all__'
+    success_url = reverse_lazy('post:home')
+
+    """
+    def get_success_url(self):
+        return reverse('post:home')
+    """
+
+class UpdatePost(generic.UpdateView):
+    pass
+
+class DeletePost(generic.DeleteView):
+    pass
 
 class NuevoUser(generic.CreateView):
     model = User
