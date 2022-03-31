@@ -3,10 +3,13 @@
 {% block title %}{{ title_pg }}{% endblock title %}
 
 {% block content %}
-<h1>Post</h1>
-<h2>{{ object.title }}</h2>
-<h3>{{ object.content }}</h3>
-<h3>Creada: {{ object.publish_date }}</h3>
-<h3>Actualizado: {{ object.last_updated }}</h3>
-
+<div>
+    <h1>Post</h1>
+    <img src="{{ object.thumbnail.url }}" alt="...">
+    <h2>{{ object.title }}</h2>
+    <h3>{{ object.content }}</h3>
+    <h3>Creada: {{ object.publish_date }}</h3>
+    <h3>Actualizado: {{ object.last_updated }}</h3>
+</div>
+<a href="{% url 'post:home' %}">volver</a>
 {% endblock content %}
