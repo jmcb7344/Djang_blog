@@ -25,12 +25,24 @@ class CreatePost(generic.CreateView):
     def get_success_url(self):
         return reverse('post:home')
     """
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["view_type"] = 'Crear'
+        return context
 
 class UpdatePost(generic.UpdateView):
-    pass
+    model = models.Post
+    fields = '__all__'
+    success_url = reverse_lazy('post:home')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["view_type"] = 'Editar'
+        return context
 
 class DeletePost(generic.DeleteView):
-    pass
+    model = models.Post
+    success_url = reverse_lazy('post:home')
 
 class NuevoUser(generic.CreateView):
     model = User

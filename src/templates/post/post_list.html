@@ -4,10 +4,17 @@
 
 {% block content %}
 <h1>Post</h1>
+<a href="{% url 'post:createpost' %}">nuevo post</a>
 <ul>
-{% for post in object_list %}
-    <li>{{ post.title }} - {{ post.publish_date }}</li>
-    <a href="postdetail/{{post.id}}">Detalle</a>
+{% for object in object_list %}
+    <li>{{ object.title }} - {{ object.publish_date }}</li>
+    <a href="{{ object.get_absolute_url }}">Detalle</a>
+    <a href="{% url 'post:updatepost' object.id %}">Editar</a>
+    <a href="delete/{{object.id}}">Eliminar</a>
+    <p>
+        <span>Like {{ object.get_like_count }} </span>
+    </p>
+    <hr>
 {% endfor %}
 </ul>
 <a href="{% url 'post:nuevousuario' %}">nuevo usuario</a>

@@ -1,11 +1,17 @@
 from django.urls import path
 from post import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'post'
 
 urlpatterns = [
     path('', views.PostList.as_view(), name='home'),
     path('nuevo', views.NuevoUser.as_view(), name='nuevousuario'),
-    path('postdetail/<int:pk>', views.PostDetail.as_view(), name='postdetail'),
-    path('create', views.CreatePost.as_view(), name='createpost')
+    path('<slug>/', views.PostDetail.as_view(), name='detail'),
+    path('create', views.CreatePost.as_view(), name='createpost'),
+    path('update/<int:pk>', views.UpdatePost.as_view(), name='updatepost'),
+    path('delete/<int:pk>', views.DeletePost.as_view(), name='deletepost'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
