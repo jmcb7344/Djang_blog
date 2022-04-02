@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block title %}{{ title_pg }}{% endblock title %}
 
@@ -10,6 +11,28 @@
     <h3>{{ object.content }}</h3>
     <h3>Creada: {{ object.publish_date }}</h3>
     <h3>Actualizado: {{ object.last_updated }}</h3>
+    <p>
+        <span><a href="{{ object.get_like_url }}"> Like </a>{{ object.get_like_count }} </span>
+        <span><a href="#"> View </a>{{ object.get_view_count }} </span>
+        <span>comment {{ object.get_comment_count }} </span>
+    </p>
+    <h3>Comentarios</h3>
+    {% for comment in object.comment %}
+        <div>
+            <p>{{ comment.coment }}
+                <br>
+                <small>Creado por: {{ comment.usuario }} - </small>
+                <small>{{ comment.timestamp }}</small>
+            </p>
+        </div>
+    {% endfor %}
+    <h3>Crea un comentario</h3>
+    {% if request.user.is_authenticated %}
+    <form method="post">{% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="{{ button }}">
+    </form>
+    {% endif %}
 </div>
 <a href="{% url 'post:home' %}">volver</a>
 {% endblock content %}
