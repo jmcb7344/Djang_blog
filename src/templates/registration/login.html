@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block title %}Login{% endblock title %}
 
@@ -20,7 +19,7 @@
         <br>
         <div class="d-grid gap-2">
             <input class="btn btn-primary" type="submit" value="login">
-            <a class="btn btn-primary" href="{% url 'password_reset' %}" role="button">Recuperar password</a>
+            <a class="btn btn-primary" href="{% url 'post:password_reset' %}" role="button">Recuperar password</a>
             <a class="btn btn-primary" href="{% url 'post:home' %}" role="button">Volver</a>
             {%csrf_token%}
         </div>

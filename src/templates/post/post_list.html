@@ -12,7 +12,9 @@
     <a href="{% url 'post:updatepost' object.id %}">Editar</a>
     <a href="delete/{{object.id}}">Eliminar</a>
     <p>
-        <span>Like {{ object.get_like_count }} </span>
+        <span><a href="{{ object.get_like_url }}"> Like </a>{{ object.get_like_count }} </span>
+        <span>View {{ object.get_view_count }} </span>
+        <span>comment {{ object.get_comment_count }} </span>
     </p>
     <hr>
 {% endfor %}

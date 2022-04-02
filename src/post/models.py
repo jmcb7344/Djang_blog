@@ -1,8 +1,10 @@
+from urllib import request
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
 # Create your models here.
+
 class Post(models.Model):
     title = models.CharField(max_length=50)
     content = models.TextField()
@@ -19,8 +21,20 @@ class Post(models.Model):
         return reverse('post:detail', kwargs={'slug':self.slug})
 
     @property
+    def comment(self):
+        return self.coment_set.all()
+
+    @property
     def get_like_count(self):
         return self.like_set.all().count()
+
+    @property
+    def get_view_count(self):
+        return self.vistas_set.all().count()
+
+    @property
+    def get_comment_count(self):
+        return self.coment_set.all().count()
 
 class Coment(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
