@@ -7,12 +7,14 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <script src="{% static 'js/bootstrap.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="https://kit.fontawesome.com/6bfc8ebd07.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
         <div class="header">
             <h2>Proyecto blog</h2>
         </div>
+        {% include "header.html" %}
     </header>
     <article>
         {% block content %}

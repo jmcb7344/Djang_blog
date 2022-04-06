@@ -20,3 +20,14 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = models.Coment
         fields = ('coment',)
+
+class CreateForm(forms.ModelForm):
+    class Meta:
+        model = models.Post
+        fields = [
+            'thumbnail',
+            'title',
+            'content',
+            'slug',
+            'autor',
+        ]

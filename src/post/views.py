@@ -1,8 +1,11 @@
+from locale import format_string
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from post import forms, models
 from django.views import generic
-from django.shortcuts import get_object_or_404, redirect, render 
+from django.shortcuts import get_object_or_404, redirect, render, HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 class PostList(generic.ListView):
@@ -24,7 +27,7 @@ class PostDetail(generic.DetailView):
 
     def post(self, *args, **kwargs):
         form = forms.CommentForm(self.request.POST)
-        if form.is_valid:
+        if form.is_valid():
             post = self.get_object()
             coment = form.instance
             coment.usuario = self.request.user
@@ -40,13 +43,14 @@ class PostDetail(generic.DetailView):
 
 class CreatePost(generic.CreateView):
     model = models.Post
-    fields = '__all__'
+    form_class = forms.CreateForm
     success_url = reverse_lazy('post:home')
 
     """
     def get_success_url(self):
         return reverse('post:home')
     """
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["view_type"] = 'Crear'
@@ -54,7 +58,7 @@ class CreatePost(generic.CreateView):
 
 class UpdatePost(generic.UpdateView):
     model = models.Post
-    fields = '__all__'
+    form_class = forms.CreateForm
     success_url = reverse_lazy('post:home')
 
     def get_context_data(self, **kwargs):
@@ -75,10 +79,10 @@ class NuevoUser(generic.CreateView):
 class LikeView(generic.View):
     def get(self, request, slug, *args, **kwargs):
         post = get_object_or_404(models.Post, slug=slug)
-        like_qs = models.Like.objects.filter(usuario=request.user, post=post)
+        like_qs = models.Like.objects.filter(usuario=self.request.user, post=post)
         if like_qs.exists():
             like_qs[0].delete()
             return redirect('post:detail', slug)
         else:
-            models.Like.objects.create(usuario=request.user, post=post)
+            models.Like.objects.create(usuario=self.request.user, post=post)
             return redirect('post:detail', slug)

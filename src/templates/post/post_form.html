@@ -5,11 +5,16 @@
 
 {% block content %}
 <div class="contenedor">
+    {% if request.user.is_authenticated %}
     <h1>{{ view_type }} el post</h1>
     <form method="post" enctype="multipart/form-data">{% csrf_token %}
         {{ form|crispy }}
         <input type="submit" value="{{ view_type }}">
     </form>
+    {% else %}
+        <a class="btn btn-primary" href="{% url 'login' %}">Iniciar Sesión</a>
+        <a class="btn btn-primary" href="{% url 'post:nuevousuario' %}">Registrar</a>
+    {% endif %}
 </div>
-<a href="{% url 'post:home' %}">volver</a>
+<a class="btn btn-primary" href="{% url 'post:home' %}">volver</a>
 {% endblock content %}
