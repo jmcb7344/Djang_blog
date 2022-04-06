@@ -7,7 +7,6 @@ app_name = 'post'
 
 urlpatterns = [
     path('', views.PostList.as_view(), name='home'),
-    path('accounts', include('django.contrib.auth.urls')),
     path('nuevo', views.NuevoUser.as_view(), name='nuevousuario'),
     path('<slug>/', views.PostDetail.as_view(), name='detail'),
     path('create', views.CreatePost.as_view(), name='createpost'),
